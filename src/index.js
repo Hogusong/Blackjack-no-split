@@ -147,6 +147,8 @@ function setButtonsAndPlay() {
       if (canDrawId == i) {       // Activate this event when canDrawId == player's ID
         players[i].surrender(); 
         pView.playerMSG('player-' + i, 'Player surrender.');
+        if (canDraw.length > 0) canDrawId = canDraw.shift();  // Move to next player
+        else drawDealerCards();   // If this is the last player on table, open dealer's card.
       }
     });
   });
@@ -164,7 +166,9 @@ function setButtonsAndPlay() {
           pView.renderPlayerScore(players[i], i);
           pView.renderLastCard(players[i].lastCard(), i);
           pView.playerMSG('player-' + i, 'Double bet for this hand.');
-          }
+          if (canDraw.length > 0) canDrawId = canDraw.shift();  // Move to next player
+          else drawDealerCards();   // If this is the last player on table, open dealer's card.
+        }
       }
     });
   });
@@ -180,6 +184,8 @@ function setButtonsAndPlay() {
         if (players[i].getScore() > 21) {   // Aftere hit, player will loose if score is over 21.
           players[i].looseHand();
           pView.playerMSG('player-' + i, 'Player lost this hand.');
+          if (canDraw.length > 0) canDrawId = canDraw.shift();  // Move to next player
+          else drawDealerCards();   // If this is the last player on table, open dealer's card.
         }
       }
     })
@@ -191,7 +197,11 @@ function setButtonsAndPlay() {
     s.addEventListener('click', () => {
       if (canDrawId == i) {       // Activate this event when canDrawId == player's ID
         pView.playerMSG('player-' + i, 'Player stay with current score.');
+        if (canDraw.length > 0) canDrawId = canDraw.shift();  // Move to next player
+        else drawDealerCards();   // If this is the last player on table, open dealer's card.
     }
     })
   })
 }
+
+function drawDealerCards() {}
