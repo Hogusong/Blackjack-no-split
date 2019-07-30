@@ -204,4 +204,36 @@ function setButtonsAndPlay() {
   })
 }
 
-function drawDealerCards() {}
+function drawDealerCards() {
+  canDrawId = null;
+  if (countInPlayer() > 0) {      // Dealer draw cards if any player is in-play mode.
+    while (dealer.getScore() < 17) {
+      drawCard(dealer);           // Dealer draw cards until the score goes over 16.
+    }
+    const scoreToPay = dealer.getScore() > 21 ? 0 : dealer.getScore()
+    payToPlayer(scoreToPay);      // Compare the scores and pay them.
+  } 
+  dom.dScore.innerText = ' -- score : ' + dealer.getScore();
+  dView.openCards(dealer.getOnHand());    // Show dealer's cards.
+  timer = setTimeout(() => init(), delayTime)  // Show the result for 3 seconds.
+}
+
+function countInPlayer() {
+  let count = 0; 
+  players.forEach(p => {
+    if (p.getInPlay()) count++;
+  })
+  return count;
+}
+
+// limit = 0 or 16 < limit < 22.
+// Compare score wiht all alived players and pay them whoelse has over limit.
+function payToPlayer(limit) {
+  players.forEach(p => {
+    if (p.getInPlay()) {
+      if (p.getScore() > limit) p.winHand();
+      else if (p.getScore() < limit) p.looseHand();
+      else p.evenHand();
+    }
+  })
+}

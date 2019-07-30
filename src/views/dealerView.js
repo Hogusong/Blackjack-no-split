@@ -7,6 +7,13 @@ export const renderInit = onHand => {
   dom.dHand.innerHTML = markup;
 }
 
+// Open and render all dealer's cards.
+export const openCards = onHand => {
+  let markup = '';
+  onHand.forEach(card => markup += cardView(card))
+  dom.dHand.innerHTML = markup;
+}
+
 // Render one card which is passed.
 function cardView(card) {
   return `
