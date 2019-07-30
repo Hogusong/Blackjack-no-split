@@ -60,3 +60,8 @@ function renderCard(card) {
     </div>
   `
 }
+
+// To display each player's game situation.
+export const playerMSG = (id, msg) => {
+  document.getElementById(id).innerHTML += `<h3 class="player-msg">${msg}</h3>`;
+}

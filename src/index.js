@@ -34,6 +34,15 @@ function init() {
         initialDraw()             // Draw 2 cards for dealer and all in-play players
         dView.renderInit(dealer.getOnHand());   // Render dealer's 2 cards 
         pView.renderCards(players);       // Render initial 2 cards for all players
+        checkBlackjack();
+        if (canDraw.length > 0) { // Dealer has no blackjack and some players may have blackjack.
+          // canDrawId is needed to verify activate or not.
+          canDrawId = canDraw.shift();
+
+          // Add event to the buttons for each player and start the game. 
+          // Four choice buttons are Surrender, Double, Hit, and Stay 
+
+        } else timer = setTimeout(() => init(), delayTime)  // Show the result for 3 seconds.
       }
     }
   }
@@ -105,4 +114,26 @@ function drawCard(player) {
   if (!player.getInPlay()) return;
   const card = cards.pop();
   player.addOnHand(card);      // Add the drawn card to the player's hand.
+}
+
+function checkBlackjack() {
+  if (dealer.hasBlackjack()) {    // Dealer has a blackjack. Game is over. 
+    players.forEach((p, i) => {
+      if (p.getInPlay()) {
+        if (p.hasBlackjack()) p.setInitPlayer()   // Player has a blackjack, so even.
+        else p.looseHand();       // Player does not have a blackjack, so loose.
+      }
+    })
+    canDraw = [];
+    message('Game over. Dealer has Blackjsck.');
+  } else {                        // Dealer does not have a blackjack. Continue the game.
+    players.forEach((p,i) => {
+      if (p.getInPlay() && p.hasBlackjack()) {    // Player has a blackjack, so win.
+        p.blackjack();
+        pView.playerMSG('player-' + i, 'You got Blackjack. Wow!');
+        const index = canDraw.indexOf(i);         
+        if (index >= 0) canDraw.splice(index,1);  // Remove the player from the canDraw[]
+      }
+    })
+  }
 }
