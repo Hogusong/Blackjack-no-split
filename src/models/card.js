@@ -2,7 +2,7 @@ export default class CARD {
   // parms: suit -> spades, hearts, clubs, diams
   // parms: key  -> A, 1 - 10, J, Q, K
   constructor(suit, key) {
-    this.icon = '&' + suit + ';' + key;
+    // this.icon = '&' + suit + ';' + key;
     this.suit = suit;
     this.color = (suit[0] === "s" || suit[0] === "c") ? 'black' : 'red';
     this.key = key;
@@ -11,7 +11,7 @@ export default class CARD {
 
   getColor()  {  return this.color  }
   getSuit()   {  return this.suit;  }
-  getIcon()   {  return this.icon;  }
+  // getIcon()   {  return this.icon;  }
   getKey()    {  return this.key;   }
   getValue()  {  return this.value; }
   
