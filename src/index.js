@@ -14,12 +14,18 @@ let canDraw = [], canDrawId = null, timer, delayTime = 3000;
 init();
 
 function init() {
-  console.log(players);
   settingPlayer(players);         // Show available players in the table
   dom.dScore.innerText = ' -- last score : ' + dealer.getScore();
 
   dom.btnAdd.onclick = () => {
     inAddOrRemove = true;
     ctrl.addPlayer(players, init);
+  }
+
+  dom.btnRemove.onclick = () => {
+    if (players.length > 0) {
+      inAddOrRemove = true;
+      ctrl.removePlayer(players, init);
+    } else message('There is no player in this table.')
   }
 }
