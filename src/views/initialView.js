@@ -7,6 +7,7 @@ export const settingPlayer  = players => {
   dom.dHand.innerHTML = '';
   dom.secInit.style.display = 'block';
   dom.players.innerHTML = '';
+  document.querySelector('#init-table h3').innerHTML = `Player's Choice (${players.length} players)`;
   let markup = '';
   players.forEach((p, i) => markup += renderPlayers(p, i));
   dom.players.innerHTML = markup;

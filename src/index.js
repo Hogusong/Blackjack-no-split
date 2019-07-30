@@ -19,6 +19,7 @@ function init() {
   // Update player's data in LocalStorage after each game done.
   if (gameStarted) ctrl.storeInStorage(players); 
 
+  document.querySelector('body h2').innerHTML = "Welcome to the Blackjack table!";
   inAddOrRemove = false;          // to control buttons -> Start game, Add, Remove
   gameStarted = false;            // to control the status for in Game or not.
   settingPlayer(players);         // Show available players in the table
@@ -30,6 +31,7 @@ function init() {
       if (canDraw.length < 1) {
         message('Wait until players join the game!');
       } else {
+        document.querySelector('body h2').innerHTML = "... Enjoy the Game ...";
         gameStarted = true;       // Set the status in-game mode.
         initialDraw()             // Draw 2 cards for dealer and all in-play players
         dView.renderInit(dealer.getOnHand());   // Render dealer's 2 cards 
