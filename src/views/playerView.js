@@ -65,3 +65,14 @@ function renderCard(card) {
 export const playerMSG = (id, msg) => {
   document.getElementById(id).innerHTML += `<h3 class="player-msg">${msg}</h3>`;
 }
+
+// Render player's each card which is just drawn.
+export const renderLastCard = (card, i) => {
+  document.getElementById('player-' + i).innerHTML += renderCard(card);
+}
+
+// Render player's score after the last card was drawn.
+export const renderPlayerScore = (p, i) => {
+  const tag = document.getElementById('score-'+i);
+  tag.innerHTML = `${p.getName()} -- Betting $${p.getBetting()} -- score : ${p.getScore()}`;
+}

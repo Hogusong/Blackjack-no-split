@@ -41,7 +41,7 @@ function init() {
 
           // Add event to the buttons for each player and start the game. 
           // Four choice buttons are Surrender, Double, Hit, and Stay 
-
+          setButtonsAndPlay();              
         } else timer = setTimeout(() => init(), delayTime)  // Show the result for 3 seconds.
       }
     }
@@ -136,4 +136,36 @@ function checkBlackjack() {
       }
     })
   }
+}
+
+// Set Events to the playing options (Surrender, Double, Hit, and Stry).
+function setButtonsAndPlay() {
+  const surrender = document.querySelectorAll('.surrender');
+  surrender.forEach(sr => {
+    const i = sr.dataset.id;
+    sr.addEventListener('click', () => {
+      if (canDrawId == i) {       // Activate this event when canDrawId == player's ID
+        players[i].surrender(); 
+        pView.playerMSG('player-' + i, 'Player surrender.');
+      }
+    });
+  });
+
+  const double = document.querySelectorAll('.double');
+  double.forEach(d => {
+    const i = d.dataset.id;
+    d.addEventListener('click', () => {
+      if (canDrawId == i) {       // Activate this event when canDrawId == player's ID
+        if (players[i].getOnHand().length > 2) {
+          message('Not allowed DOUBLE after 3rd card drawn.');
+        } else {
+          players[i].setBetting(players[i].getBetting() * 2); // Reset betAmt double.
+          drawCard(players[i]);
+          pView.renderPlayerScore(players[i], i);
+          pView.renderLastCard(players[i].lastCard(), i);
+          pView.playerMSG('player-' + i, 'Double bet for this hand.');
+          }
+      }
+    });
+  });
 }
