@@ -4,6 +4,7 @@ import * as ctrl from './controller/playerCtrl';
 import { dom } from './models/base';
 import * as base from './models/base';
 import * as dView from './views/dealerView';
+import * as pView from './views/playerView';
 import { settingPlayer } from './views/initialView';
 
 let players = ctrl.createPlayers();     // Get players' infomation from the LocalStorage.
@@ -32,6 +33,7 @@ function init() {
         gameStarted = true;       // Set the status in-game mode.
         initialDraw()             // Draw 2 cards for dealer and all in-play players
         dView.renderInit(dealer.getOnHand());   // Render dealer's 2 cards 
+        pView.renderCards(players);       // Render initial 2 cards for all players
       }
     }
   }
