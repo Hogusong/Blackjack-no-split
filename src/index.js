@@ -1,7 +1,7 @@
 import './css/styles.css';
 import PLAYER from './models/player';
 import * as ctrl from './controller/playerCtrl';
-import { dom } from './models/base';
+import { dom, message } from './models/base';
 import * as base from './models/base';
 import * as dView from './views/dealerView';
 import * as pView from './views/playerView';
