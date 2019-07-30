@@ -168,4 +168,30 @@ function setButtonsAndPlay() {
       }
     });
   });
+
+  const hit = document.querySelectorAll('.hit');
+  hit.forEach(h => {
+    const i = h.dataset.id;
+    h.addEventListener('click', () => {
+      if (canDrawId == i) {       // Activate this event when canDrawId == player's ID
+        drawCard(players[i]);
+        pView.renderPlayerScore(players[i], i);
+        pView.renderLastCard(players[i].lastCard(), i);
+        if (players[i].getScore() > 21) {   // Aftere hit, player will loose if score is over 21.
+          players[i].looseHand();
+          pView.playerMSG('player-' + i, 'Player lost this hand.');
+        }
+      }
+    })
+  })
+  
+  const stay = document.querySelectorAll('.stay');
+  stay.forEach(s => {
+    const i = s.dataset.id;
+    s.addEventListener('click', () => {
+      if (canDrawId == i) {       // Activate this event when canDrawId == player's ID
+        pView.playerMSG('player-' + i, 'Player stay with current score.');
+    }
+    })
+  })
 }
