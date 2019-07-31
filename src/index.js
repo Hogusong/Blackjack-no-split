@@ -6,6 +6,7 @@ import * as base from './models/base';
 import * as dView from './views/dealerView';
 import * as pView from './views/playerView';
 import { settingPlayer } from './views/initialView';
+import * as help from './views/helpView';
 
 let players = ctrl.createPlayers();     // Get players' infomation from the LocalStorage.
 const dealer = new PLAYER('Dealer', 100000000, true);   // Create the dealer.
@@ -24,6 +25,26 @@ function init() {
   gameStarted = false;            // to control the status for in Game or not.
   settingPlayer(players);         // Show available players in the table
   dom.dScore.innerText = ' -- last score : ' + dealer.getScore();
+
+  dom.btnHelp.onclick = () => {
+    dom.modalStart.style.display = 'block';
+    help.renderGuide();
+    setEvent();
+
+    function setEvent() {
+      dom.btnGuide.onclick = () => {
+        help.renderGuide();
+        setEvent();
+      }
+      dom.btnGameHelp.onclick = () => {
+        help.renderGameHelp();
+        setEvent();
+      }
+      dom.btnExit.onclick = () => {
+        dom.modalStart.style.display = 'none';
+      }
+    }
+  }
 
   dom.btnStart.onclick = () => {
     if (base.canAcceptClick(gameStarted, inAddOrRemove)) {
